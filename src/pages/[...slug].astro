@@ -4,12 +4,21 @@ import MainLayout from '../layouts/MainLayout.astro';
 
 export async function getStaticPaths() {
 	const docs = await getCollection('docs');
-	return docs.map((entry) => ({
-		params: {
-			slug: entry.slug,
-		},
-		props: entry,
-	}));
+	return docs.map((entry) => {
+		let staticPath = {
+			params: {
+				slug: entry.slug,
+			},
+			props: entry,
+		}
+
+		// To avoid infinite redirect between `index.astro` and `index.md` this is necessary
+		if (entry.id === 'index.md') {
+			staticPath.params['path'] = undefined;
+		}
+
+		return staticPath;
+	});
 }
 type Props = CollectionEntry<'docs'>;
 

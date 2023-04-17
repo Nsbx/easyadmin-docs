@@ -10,5 +10,9 @@ export default defineConfig({
 		// Enable React for the Algolia search component.
 		react(),
 	],
-	site: `https://astro.build`,
+	build: {
+		format: 'file'
+	},
+	site: `https://nsbx.github.io/`,
+	base: '/easyadmin-docs',
 });
